@@ -1,55 +1,38 @@
 SORT_KEY = "count"
-SPACE = " "
 
-def get_book_text(filepath):
-    file_contents = None
 
-    with open(filepath) as f:
-        file_contents = f.read()
+def get_word_count(text):
+    words = text.split()
+    return len(words)
 
-    return file_contents
 
-def get_number_of_words(filepath):
-    book_text = get_book_text(filepath)
-    words = book_text.split(sep=SPACE)
-    num_words = len(words)
-    return num_words
+def get_chars_dict(text):
+    chars = {}
 
-def get_character_counts(filepath):
-    book_text_lower = get_book_text(filepath).lower()
-    character_counts = {}
-
-    for character in book_text_lower:
-        if character in character_counts:
-            character_counts[character] += 1
+    for c in text:
+        lowered = c.lower()
+        
+        if lowered in chars:
+            chars[lowered] += 1
         else:
-            character_counts[character] = 1
+            chars[lowered] = 1
+            
+    return chars
 
-    return character_counts
 
-def sort_on(dictionary):
-    return dictionary[SORT_KEY]
+def sort_on(dict):
+    return dict[SORT_KEY]
 
-"""
-# List comprehension example.
-def to_dictionary_entry_list(dictionary):
-    return [{"letter": key, SORT_KEY: value} for key, value in dictionary.items()]
-"""
 
-def to_sorted_dictionary_entry_list(dictionary):
-    dictionary_entry_list = []
+def chars_dict_to_sorted_list(char_count_dict):
+    sorted_list = []
 
-    for entry in dictionary.items():
-        key, value = entry
-
-        if not key.isalpha():
-            continue
-
-        dictionary_entry_list.append({
-            "letter": key,
-            SORT_KEY: value
+    for char in char_count_dict:
+        sorted_list.append({
+            "char": char, 
+            "count": char_count_dict[char]
         })
 
-    dictionary_entry_list.sort(reverse=True, key=sort_on)
+    sorted_list.sort(reverse=True, key=sort_on)
 
-    return dictionary_entry_list
+    return sorted_list

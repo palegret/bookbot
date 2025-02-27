@@ -55,4 +55,5 @@ python3 main.py books/mobydick.txt
 python3 main.py books/prideandprejudice.txt
 """
 
-main()
+if __name__ == "__main__":
+    main()
